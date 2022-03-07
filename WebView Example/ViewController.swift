@@ -23,6 +23,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem( title: "Back", style: .plain, target: self, action: #selector(gotoBack))
         
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
@@ -49,6 +50,16 @@ class ViewController: UIViewController, WKNavigationDelegate {
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         ac.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(ac,animated: true)
+    }
+    
+    @objc func gotoBack(){
+        if(webView.canGoBack == false)
+        {
+         self.navigationController?.popViewController(animated: true)
+        }
+        else{
+        webView.goBack()
+        }
     }
     
     func openPage(action : UIAlertAction){
